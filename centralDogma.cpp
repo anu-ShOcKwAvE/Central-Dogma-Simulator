@@ -1,12 +1,15 @@
 //Central Dogma: DNA->RNA->Protein
-//This program transcript and translate dna into protein.
+//This program transcript and translate a piece of DNA segnent into protein it codes...
 
 /*
-Bio part:: DNA only contains 4bases Adenine(a),Guanine(g),;
-Cytosine(c),Thymine(t),so the dna template should only be the combination of these segments
+Bio part:: 
+1.DNA only contains adenine(a),thymine(t),guanine(g),cytosine(c).
+2.In RNA thymine is replaced by uracil and all other bases are changed to their complements 
+through the process of transcription.
+3.Finally combinations of 3 bases from the RNA template strand are translated into their respective proteins
 */
 
-//Written by: Anu Panicker
+//Written by: Anu Panicker [Insta: middle.finger.is.my.peace.sign]
 //Dated: 14-NOV-MMXV111
 
 #include <iostream>
@@ -29,21 +32,21 @@ int main()
 	cout<<"Type in the template codons: ";
 	getline (cin,dnaTemplate);
 	if (dnaTemplate.find_first_not_of("agtc")==string::npos)
-	{ dnaTemplate.erase(dnaTemplate.end()-dnaTemplateModulator(dnaTemplate.size()),dnaTemplate.end());	transform(dnaTemplate.begin(),dnaTemplate.end(),dnaTemplate.begin(),::toupper);
-	
+	{ dnaTemplate.erase(dnaTemplate.end()-dnaTemplateModulator(dnaTemplate.size()),dnaTemplate.end());	
+        transform(dnaTemplate.begin(),dnaTemplate.end(),dnaTemplate.begin(),::toupper);
 	vector <char> transcription;    copy(dnaTemplate.begin(),dnaTemplate.end(),back_inserter(transcription));
 	for(int n_base=0;n_base<dnaTemplate.size();++n_base)
 	{	
 	if(transcription.at(n_base)=='A')
 	{transcription.at(n_base)='U';}
-    else if(transcription.at(n_base)=='T')
-    {transcription.at(n_base)='A';}
+        else if(transcription.at(n_base)=='T')
+        {transcription.at(n_base)='A';}
 	else if(transcription.at(n_base)=='G')
 	{transcription.at(n_base)='C';}
 	else if(transcription.at(n_base)=='C')
 	{transcription.at(n_base)='G';}
 	}
-string rnaTemplate(transcription.begin(),transcription.end());
+ string rnaTemplate(transcription.begin(),transcription.end());
 	cout<<"DNA Template:"<<"5'- "<<dnaTemplate<<" -3'"<<endl;
 	cout<<"RNA Template:"<<"5'- "<<rnaTemplate<<" -3'"<<endl;
 	cout<<endl;
@@ -51,37 +54,37 @@ string rnaTemplate(transcription.begin(),transcription.end());
 	vector <string> geneticCode;
 	for(int triplet=0;triplet<(rnaTemplate.size());triplet+=3)
 	{geneticCode.push_back((rnaTemplate.substr(triplet,3)));}
-    string codon; codon.resize(3);
-    vector <char> bases;
-    cout<<"Protein: ";
-for(int aminoacid=0;aminoacid<geneticCode.size();++aminoacid)
+        string codon; codon.resize(3);
+        vector <char> bases;
+        cout<<"Protein: ";
+ for(int aminoacid=0;aminoacid<geneticCode.size();++aminoacid)
 	{
 		codon=geneticCode.at(aminoacid);
 		copy(codon.begin(),codon.end(),back_inserter(bases));
 		
 	if(aminoacid==0)
 	{cout<<codonTable(bases[0],bases[1],bases[2]);}
-	else if(aminoacid>0&&aminoacid<geneticCode.size())	        {cout<<"-"<<codonTable(bases[0],bases[1],bases[2]);}
+	else if(aminoacid>0&&aminoacid<geneticCode.size())	        
+        {cout<<"-"<<codonTable(bases[0],bases[1],bases[2]);}
 	else if(aminoacid!=0&&aminoacid==geneticCode.size())
 	{cout<<"-"<<codonTable(bases[0],bases[1],bases[2]);}
-			bases.clear();
+		bases.clear();
 		}
 		cout<<endl<<endl;
 	}
 	else {cout<<"Invalid DNA template\n";}
 	};
-
 	return 0;
 }
 
-int dnaTemplateModulator(int d_tempSize)
+ int dnaTemplateModulator(int d_tempSize)
 {
 	if(d_tempSize%3 == 0){return 0;}
 	else if(((d_tempSize-1)%3 && (d_tempSize+2)%3) == 0){return 1;}
 	else if(((d_tempSize+1)%3 && (d_tempSize-2)%3) == 0){;return 2;}
 }
 
-string codonTable(char _base1,char _base2,char _base3)
+ string codonTable(char _base1,char _base2,char _base3)
 {
 
 typedef vector<string> base_1;
